@@ -67,8 +67,10 @@ jobs:
             sudo chmod 666 /var/run/docker.sock
           fi
 
+          docker container ps
+
           # Stop & Clear old docker containers (Note this will cause some downtime)
-          docker kill $(docker container ps -a -q)
+          docker kill \$(docker container ps -a -q)
 
           # Build the latest version of the docker image and launch it
           cd backend
