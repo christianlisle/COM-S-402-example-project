@@ -36,7 +36,7 @@ jobs:
           EC2_IP_ADDRESS=$(aws cloudformation describe-stacks --region $REGION --query 'Stacks[0].Outputs[?OutputKey==`IPAddress`].OutputValue' --output text)
           KEY_PAIR_NAME=$(aws cloudformation describe-stacks --region $REGION --query 'Stacks[0].Outputs[?OutputKey==`SSHKeyPairName`].OutputValue' --output text)
 
-          echo "VM_IP=$EC2_IP_ADDRESS" >> $GITHUB_ENV
+          echo "EC2_IP_ADDRESS=$EC2_IP_ADDRESS" >> $GITHUB_ENV
           echo "VM_IP=$EC2_IP_ADDRESS" >> $GITHUB_OUTPUT
           echo "KEY_PAIR_NAME=$KEY_PAIR_NAME" >> $GITHUB_ENV
 
