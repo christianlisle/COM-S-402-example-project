@@ -29,6 +29,7 @@ If you still need to grant the repository access to deploy resources inside your
 In your AWS Account, create a new IAM Role with the permissions you deem necessary. The role must include permissions to create/update/delete resources in the following services.
 
   - [Cloudformation](https://aws.amazon.com/cloudformation/)
+  - [CloudFrontt](https://aws.amazon.com/cloudfront/)
   - [S3](https://aws.amazon.com/s3/)
   - [EC2](https://aws.amazon.com/ec2/)
   - [Systems Manager (SSM)](https://aws.amazon.com/systems-manager/)
