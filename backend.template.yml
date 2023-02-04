@@ -11,10 +11,10 @@ Parameters:
 Resources:
   # A SSH key for remote access to the virtual machine
   # The key will be generated and stored within the AWS account for us to later retrieve as needed.
-  # SSHKey:
-  #   Type: AWS::EC2::KeyPair
-  #   Properties: 
-  #     KeyName: virtual-machine-ssh-key
+  SSHKey:
+    Type: AWS::EC2::KeyPair
+    Properties: 
+      KeyName: virtual-machine-ssh-key
 
 
   # The Virtual Machine (called an EC2 Instance) that we can use to run our API
@@ -22,7 +22,7 @@ Resources:
   VirtualMachine:
     Type: AWS::EC2::Instance
     Properties:
-    #   KeyName: !Ref SSHKey
+      KeyName: !Ref SSHKey
       ImageId: ami-0070c5311b7677678 # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html
       InstanceType: t3.small # https://aws.amazon.com/ec2/instance-types/
       SecurityGroups:
@@ -62,6 +62,6 @@ Outputs:
     Value: !Ref StaticIP 
     Description: The Elastic (static) IP address of our Virtual Machine.
 
-      # SSHKeyPairName:
-      # Description: The ID of the SSH Key Pair associated with our Virtual Machine.
-      # Value: !Sub '/ec2/keypair/${SSHKey.KeyPairId}'
+  SSHKeyPairName:
+    Description: The ID of the SSH Key Pair associated with our Virtual Machine.
+    Value: !Sub '/ec2/keypair/${SSHKey.KeyPairId}'
