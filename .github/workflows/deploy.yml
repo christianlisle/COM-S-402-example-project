@@ -33,16 +33,15 @@ jobs:
         run: |
           sam deploy --region $REGION --stack-name "backend" -t backend.template.yml
 
-          EC2_IP_ADDRESS=$(aws cloudformation describe-stacks --region $REGION --query 'Stacks[0].Outputs[?OutputKey==`IPAddress`].OutputValue' --output text)
-          KEY_PAIR_NAME=$(aws cloudformation describe-stacks --region $REGION --query 'Stacks[0].Outputs[?OutputKey==`SSHKeyPairName`].OutputValue' --output text)
+          EC2_IP_ADDRESS=$(aws cloudformation describe-stacks --region $REGION --stack-name "backend" --query 'Stacks[0].Outputs[?OutputKey==`IPAddress`].OutputValue' --output text)
 
           echo "EC2_IP_ADDRESS=$EC2_IP_ADDRESS" >> $GITHUB_ENV
           echo "VM_IP=$EC2_IP_ADDRESS" >> $GITHUB_OUTPUT
-          echo "KEY_PAIR_NAME=$KEY_PAIR_NAME" >> $GITHUB_ENV
 
       - name: Start API 
         run: |
           # Grab the SSH key from AWS
+          KEY_PAIR_NAME=$(aws cloudformation describe-stacks --region $REGION --stack-name "backend" --query 'Stacks[0].Outputs[?OutputKey==`SSHKeyPairName`].OutputValue' --output text)
           aws ssm get-parameter --name $KEY_PAIR_NAME --region $REGION --with-decryption --query 'Parameter.Value' --output text > key.pem
           chmod 600 key.pem
 
