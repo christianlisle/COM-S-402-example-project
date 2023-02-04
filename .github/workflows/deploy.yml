@@ -45,8 +45,10 @@ jobs:
           # Grab the SSH key from AWS
           aws ssm get-parameter --name $KEY_PAIR_NAME --region $REGION --with-decryption --query 'Parameter.Value' --output text > key.pem
           chmod 600 key.pem
+
           EC2_INSTANCE_ID=$(aws ec2 describe-instances --region $REGION --filters "Name=ip-address,Values=$EC2_IP_ADDRESS" --query "Reservations[*].Instances[*].[InstanceId]" --output text)
           EC2_INSTANCE_STATUS=$(aws ec2 describe-instance-status --region $REGION --instance-id $EC2_INSTANCE_ID --query "InstanceStatuses[?InstanceId=='$EC2_INSTANCE_ID'].InstanceState.Name")
+
           until [ "$EC2_INSTANCE_STATUS" == "running" ]; do
             echo "Starting EC2 Instance..."
             aws ec2 start-instances --instance-ids $EC2_INSTANCE_ID
@@ -99,9 +101,11 @@ jobs:
 
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit
+        working-directory: ./frontend
 
       - name: Build and push static frontend
         run: |
+          cd frontend
           npm run build
 
           BUCKET=$(aws cloudformation describe-stacks --stack-name="frontend" --region $REGION --query 'Stacks[0].Outputs[?OutputKey==`S3BucketName`].OutputValue' --output text)
