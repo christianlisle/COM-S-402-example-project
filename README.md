@@ -25,6 +25,7 @@ What's missing from this example is the use of a [Docker Registry](https://docs.
 #### One or Many stacks?
 I would advocate against having a frontend and a backend stack for a project like this. Instead, a single stack will be much easier to manage.
 
+
 ## Connecting Repository to AWS
 If you still need to grant the repository access to deploy resources inside your AWS account, follow these steps.
 
@@ -37,7 +38,7 @@ In your AWS Account, create a new IAM Role with the permissions you deem necessa
   - [EC2](https://aws.amazon.com/ec2/)
   - [Systems Manager (SSM)](https://aws.amazon.com/systems-manager/)
 
-**Note:** It is best practice to follow [least-Priviliege Principle](https://g.co/kgs/Erp38S)
+**Note:** It is best practice to follow the [least-Privilege Principle](https://g.co/kgs/Erp38S)
 
 ### 2. Configure OpenID to connect AWS and GitHub Actions
 Refer to GitHub's docs for [Configuring OpenID Connect in AWS](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services) for guidance.
