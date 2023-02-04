@@ -67,8 +67,7 @@ jobs:
           fi
 
           # Stop & Clear old docker containers (Note this will cause some downtime)
-          docker stop $(docker ps -a -q)
-          docker rm $(docker ps -a -q)
+          docker kill $(docker container ps -a -q)
 
           # Build the latest version of the docker image and launch it
           cd backend
