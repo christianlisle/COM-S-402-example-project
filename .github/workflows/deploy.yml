@@ -67,8 +67,6 @@ jobs:
             sudo chmod 666 /var/run/docker.sock
           fi
 
-          docker container ps
-
           # Stop & Clear old docker containers (Note this will cause some downtime)
           docker kill \$(docker container ps -a -q)
 
@@ -115,7 +113,7 @@ jobs:
 
       - name: Generate Github Actions summary
         run: |
-          FRONTEND_URL=$(aws cloudformation describe-stacks --stack-name=$STACK_NAME --region $REGION --query 'Stacks[0].Outputs[?OutputKey==`FrontendUrl`].OutputValue' --output text)
+          FRONTEND_URL=$(aws cloudformation describe-stacks --stack-name "frontend" --region $REGION --query 'Stacks[0].Outputs[?OutputKey==`FrontendUrl`].OutputValue' --output text)
           echo "### Deploy succeeded" >> $GITHUB_STEP_SUMMARY
           echo "Frontend: [$FRONTEND_URL]($FRONTEND_URL)" >> $GITHUB_STEP_SUMMARY
           echo "Virtual Machine: ${{ needs.deploy-backend.outputs.IP_ADDRESS }}" >> $GITHUB_STEP_SUMMARY
