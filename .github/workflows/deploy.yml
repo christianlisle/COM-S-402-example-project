@@ -17,13 +17,13 @@ jobs:
   deploy-backend:
     runs-on: ubuntu-latest
     outputs:
-      IP_ADDRESS: ${{ steps.deploy-stack.VM_IP }}
+      IP_ADDRESS: ${{ steps.deploy-stack.outputs.IP_ADDRESS }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: ${{ secrets.IAM_ROLE_ARN }}
           aws-region: ${{ env.REGION }}
@@ -36,7 +36,7 @@ jobs:
           EC2_IP_ADDRESS=$(aws cloudformation describe-stacks --region $REGION --stack-name "backend" --query 'Stacks[0].Outputs[?OutputKey==`IPAddress`].OutputValue' --output text)
 
           echo "EC2_IP_ADDRESS=$EC2_IP_ADDRESS" >> $GITHUB_ENV
-          echo "VM_IP=$EC2_IP_ADDRESS" >> $GITHUB_OUTPUT
+          echo "IP_ADDRESS=$EC2_IP_ADDRESS" >> $GITHUB_OUTPUT
 
       - name: Start API 
         run: |
@@ -84,7 +84,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: ${{ secrets.IAM_ROLE_ARN }}
           aws-region: ${{ env.REGION }}

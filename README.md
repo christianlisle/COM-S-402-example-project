@@ -22,6 +22,9 @@ If you have very simple relationships, or even none at all, then NoSQL is a good
 Docker is wonderful, however it's use is a little off in this example. \
 What's missing from this example is the use of a [Docker Registry](https://docs.docker.com/registry/). I would recommend using [Docker Hub](https://docs.docker.com/docker-hub/).
 
+#### One or Many stacks?
+I would advocate against having a frontend and a backend stack for a project like this. Instead, a single stack will be much easier to manage.
+
 ## Connecting Repository to AWS
 If you still need to grant the repository access to deploy resources inside your AWS account, follow these steps.
 
